@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: StringCalculatorTest
--------------------------------------------------------------------------------
-Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.008 s <<< FAILURE! - in StringCalculatorTest
-addNegativeNumbersAllAppearInExceptionMessage  Time elapsed: 0.001 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <Negatives are not allowed: [-1, -2]> but was: <Negatives are not allowed: [-1]>
-	at StringCalculatorTest.addNegativeNumbersAllAppearInExceptionMessage(StringCalculatorTest.java:51)
-
