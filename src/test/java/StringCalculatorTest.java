@@ -11,31 +11,36 @@ public class StringCalculatorTest {
 
     @Test
     public void add_EmptyString_ReturnZero() {
-        Assertions.assertEquals(calculator.add(""), 0);
+        Assertions.assertEquals(0, calculator.add(""));
     }
 
     @Test
     public void add_SingleNumber_ReturnThatNumber() {
-        Assertions.assertEquals(calculator.add("1"), 1);
+        Assertions.assertEquals(1, calculator.add("1"));
     }
 
     @Test
     public void add_SeveralNumbers_ReturnSum() {
-        Assertions.assertEquals(calculator.add("1,2,3,4,5"), 15);
+        Assertions.assertEquals(15, calculator.add("1,2,3,4,5"));
     }
 
     @Test
     public void add_TrailingDelimiter_IsValid() {
-        Assertions.assertEquals(calculator.add("1,2,"), 3);
+        Assertions.assertEquals(3, calculator.add("1,2,"));
     }
 
     @Test
     public void add_NewlineDelimiter_IsValid() {
-        Assertions.assertEquals(calculator.add("1,2\n3"), 6);
+        Assertions.assertEquals(6, calculator.add("1,2\n3"));
     }
 
     @Test
     public void add_CustomDelimiterValidSyntax_IsValid() {
-        Assertions.assertEquals(calculator.add("//;\n1;2;3"), 6);
+        Assertions.assertEquals(6, calculator.add("//;\n1;2;3"));
+    }
+
+    @Test
+    public void add_CustomDelimiterRegexCharacter_IsValid() {
+        Assertions.assertEquals(6, calculator.add("//.\n1.2.3"));
     }
 }

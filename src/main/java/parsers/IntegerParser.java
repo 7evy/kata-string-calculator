@@ -1,18 +1,19 @@
 package parsers;
 
-import validators.Validator;
+import validators.FormatValidator;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class IntegerParser implements Parser<Integer> {
+    // Syntax for custom delimiter
     private final String DELIMITER_REGEX = "//.\n";
+    // Default if delimiter is not set
     private final String DEFAULT_DELIMITERS = "[,\n]";
-    private final Validator validator;
+    private final FormatValidator formatValidator;
 
     public IntegerParser() {
-        validator = new Validator();
+        formatValidator = new FormatValidator();
     }
 
     public List<Integer> parse(String stringToParse) {
@@ -31,14 +32,14 @@ public class IntegerParser implements Parser<Integer> {
     /**
      * Finds the delimiter at the expected position from DELIMITER_REGEX.
      * Multiple custom delimiters are not supported.
-     * Throws exception for an invalid delimiter (e.g. a digit).
+     * @throws exceptions.BadDelimiterException
      */
     public String parseDelimiter(String stringToParse) {
         int delimiterIndex = DELIMITER_REGEX.indexOf(".");
         String delimiter = String.valueOf(stringToParse.charAt(delimiterIndex));
-        validator.checkDelimiter(delimiter);
+        formatValidator.checkDelimiter(delimiter);
         removeHead(stringToParse);
-        return delimiter;
+        return "\\" + delimiter;
     }
 
     /**
@@ -49,18 +50,23 @@ public class IntegerParser implements Parser<Integer> {
         return stringToParse.matches(regexIfDelimiter);
     }
 
+    /**
+     * @throws exceptions.BadFormatException
+     */
     public List<String> parseBody(String stringToParse, String delimiter) {
-        List<String> items = Arrays.stream(stringToParse.split(delimiter))
-                .collect(Collectors.toList());
-        validator.checkBody(items);
+        List<String> items = List.of(stringToParse.split(delimiter));
+        formatValidator.checkBody(items);
         return items;
     }
 
+    /**
+     * @throws exceptions.NegativeNumberException
+     */
     public List<Integer> parseNumbers(List<String> numberString) {
         List<Integer> numbers = numberString.stream()
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
-        validator.checkNegatives(numbers);
+        formatValidator.checkNegatives(numbers);
         return numbers;
     }
 

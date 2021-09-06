@@ -8,17 +8,17 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidatorTest {
+public class FormatValidatorTest {
 
-    Validator validator;
-    ValidatorTest() {
-        validator = new Validator();
+    FormatValidator formatValidator;
+    FormatValidatorTest() {
+        formatValidator = new FormatValidator();
     }
 
     @Test
     public void checkDelimiter_BadCustomDelimiter_ThrowException() {
-        Assertions.assertThrows(BadDelimiterException.class, () -> validator.checkDelimiter("0"));
-        Assertions.assertThrows(BadDelimiterException.class, () -> validator.checkDelimiter("-"));
+        Assertions.assertThrows(BadDelimiterException.class, () -> formatValidator.checkDelimiter("0"));
+        Assertions.assertThrows(BadDelimiterException.class, () -> formatValidator.checkDelimiter("-"));
     }
 
     @Test
@@ -26,7 +26,7 @@ public class ValidatorTest {
         List<Integer> numbers = new ArrayList<>();
         numbers.add(1);
         numbers.add(-1);
-        Assertions.assertThrows(NegativeNumberException.class, () -> validator.checkNegatives(numbers));
+        Assertions.assertThrows(NegativeNumberException.class, () -> formatValidator.checkNegatives(numbers));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class ValidatorTest {
         numbers.add(1);
         numbers.add(-2);
         try {
-            validator.checkNegatives(numbers);
+            formatValidator.checkNegatives(numbers);
         } catch (NegativeNumberException e) {
             Assertions.assertTrue(e.getMessage().contains("-1") && e.getMessage().contains("-2"));
         }

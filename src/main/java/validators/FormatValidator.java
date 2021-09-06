@@ -7,10 +7,17 @@ import exceptions.NegativeNumberException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Validator {
-    private final String FORBIDDEN_DELIMITERS = "[0-9-\n]";
+public class FormatValidator {
+    // Digits cannot be delimiters
+    // - is needed to catch negatives and throw a specific exception
+    // / and \n are part of the custom delimiter prefix
+    private final String FORBIDDEN_DELIMITERS = "[0-9-/\n]";
+    // Matches any integer
     private final String INTEGER_REGEX = "-?[0-9]+";
 
+    /**
+     * @throws BadDelimiterException
+     */
     public void checkDelimiter(String delimiter) {
         if (delimiter.matches(FORBIDDEN_DELIMITERS)) {
             throw new BadDelimiterException(delimiter);
@@ -19,6 +26,7 @@ public class Validator {
 
     /**
      * Checks if all strings can be parsed to integers (negatives are handled elsewhere).
+     * @throws BadFormatException
      */
     public void checkBody(List<String> body) {
         for (String s:body) {
@@ -28,6 +36,9 @@ public class Validator {
         }
     }
 
+    /**
+     * @throws NegativeNumberException
+     */
     public void checkNegatives(List<Integer> numbers) {
         List<Integer> negatives = numbers.stream()
                 .filter(n -> n < 0)
