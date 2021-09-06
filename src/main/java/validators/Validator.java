@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class Validator {
     private final String FORBIDDEN_DELIMITERS = "[0-9-\n]";
-    private final String NUMBER_REGEX = "-?[0-9]+";
+    private final String INTEGER_REGEX = "-?[0-9]+";
 
     public void checkDelimiter(String delimiter) {
         if (delimiter.matches(FORBIDDEN_DELIMITERS)) {
@@ -20,7 +20,7 @@ public class Validator {
      */
     public void checkBody(String[] body) {
         for (String s:body) {
-            if (!s.matches(NUMBER_REGEX)) {
+            if (!s.matches(INTEGER_REGEX)) {
                 throw new BadFormatException("'" + s + "' cannot be parse as an integer");
             }
         }

@@ -10,7 +10,7 @@ public class StringCalculator {
     }
 
     /**
-     * Sums numbers listed in the String parameter
+     * Sums numbers listed in the String parameter.
      */
     public int Add(String numberString) {
         if (numberString.isEmpty()) {

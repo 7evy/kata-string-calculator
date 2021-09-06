@@ -13,30 +13,27 @@ public class IntegerParser implements Parser<Integer> {
     }
 
     public Integer[] parse(String stringToParse) {
-        String delimiter = DEFAULT_DELIMITERS;
         // If there is a prefix for a custom delimiter, read it then remove it
+        String delimiter = DEFAULT_DELIMITERS;
         if (hasCustomDelimiter(stringToParse)) {
             delimiter = parseDelimiter(stringToParse);
             stringToParse = removeHead(stringToParse);
         }
-        validator.checkDelimiter(delimiter);
 
         String[] numberString = parseBody(stringToParse, delimiter);
-        validator.checkBody(numberString);
 
-        Integer[] numbers = parseNumbers(numberString);
-        validator.checkNegatives(numbers);
-
-        return numbers;
+        return parseNumbers(numberString);
     }
 
     /**
      * Finds the delimiter at the expected position from DELIMITER_REGEX.
      * Multiple custom delimiters are not supported.
+     * Throws exception for an invalid delimiter (e.g. a digit).
      */
     public String parseDelimiter(String stringToParse) {
         int delimiterIndex = DELIMITER_REGEX.indexOf(".");
         String delimiter = String.valueOf(stringToParse.charAt(delimiterIndex));
+        validator.checkDelimiter(delimiter);
         removeHead(stringToParse);
         return delimiter;
     }
@@ -50,14 +47,18 @@ public class IntegerParser implements Parser<Integer> {
     }
 
     public String[] parseBody(String stringToParse, String delimiter) {
-        return Arrays.stream(stringToParse.split(delimiter))
+        String[] items = Arrays.stream(stringToParse.split(delimiter))
                 .toArray(String[]::new);
+        validator.checkBody(items);
+        return items;
     }
 
     public Integer[] parseNumbers(String[] numberString) {
-        return Arrays.stream(numberString)
+        Integer[] numbers = Arrays.stream(numberString)
                 .map(Integer::parseInt)
                 .toArray(Integer[]::new);
+        validator.checkNegatives(numbers);
+        return numbers;
     }
 
     /**
