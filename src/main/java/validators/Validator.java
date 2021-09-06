@@ -3,7 +3,9 @@ package validators;
 import exceptions.BadDelimiterException;
 import exceptions.BadFormatException;
 import exceptions.NegativeNumberException;
-import java.util.Arrays;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Validator {
     private final String FORBIDDEN_DELIMITERS = "[0-9-\n]";
@@ -18,7 +20,7 @@ public class Validator {
     /**
      * Checks if all strings can be parsed to integers (negatives are handled elsewhere).
      */
-    public void checkBody(String[] body) {
+    public void checkBody(ArrayList<String> body) {
         for (String s:body) {
             if (!s.matches(INTEGER_REGEX)) {
                 throw new BadFormatException("'" + s + "' cannot be parse as an integer");
@@ -26,11 +28,11 @@ public class Validator {
         }
     }
 
-    public void checkNegatives(Integer[] numbers) {
-        Integer[] negatives = Arrays.stream(numbers)
+    public void checkNegatives(ArrayList<Integer> numbers) {
+        ArrayList<Integer> negatives = numbers.stream()
                 .filter(n -> n < 0)
-                .toArray(Integer[]::new);
-        if (negatives.length > 0) {
+                .collect(Collectors.toCollection(ArrayList<Integer>::new));
+        if (!negatives.isEmpty()) {
             throw new NegativeNumberException(negatives);
         }
     }

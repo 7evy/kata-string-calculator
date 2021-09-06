@@ -10,32 +10,32 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void Add_EmptyString_ReturnZero() {
-        Assertions.assertEquals(calculator.Add(""), 0);
+    public void add_EmptyString_ReturnZero() {
+        Assertions.assertEquals(calculator.add(""), 0);
     }
 
     @Test
-    public void Add_SingleNumber_ReturnThatNumber() {
-        Assertions.assertEquals(calculator.Add("1"), 1);
+    public void add_SingleNumber_ReturnThatNumber() {
+        Assertions.assertEquals(calculator.add("1"), 1);
     }
 
     @Test
-    public void Add_SeveralNumbers_ReturnSum() {
-        Assertions.assertEquals(calculator.Add("1,2,3,4,5"), 15);
+    public void add_SeveralNumbers_ReturnSum() {
+        Assertions.assertEquals(calculator.add("1,2,3,4,5"), 15);
     }
 
     @Test
-    public void Add_TrailingDelimiter_IsValid() {
-        Assertions.assertEquals(calculator.Add("1,2,"), 3);
+    public void add_TrailingDelimiter_IsValid() {
+        Assertions.assertEquals(calculator.add("1,2,"), 3);
     }
 
     @Test
-    public void Add_NewlineDelimiter_IsValid() {
-        Assertions.assertEquals(calculator.Add("1,2\n3"), 6);
+    public void add_NewlineDelimiter_IsValid() {
+        Assertions.assertEquals(calculator.add("1,2\n3"), 6);
     }
 
     @Test
-    public void Add_CustomDelimiterValidSyntax_IsValid() {
-        Assertions.assertEquals(calculator.Add("//;\n1;2;3"), 6);
+    public void add_CustomDelimiterValidSyntax_IsValid() {
+        Assertions.assertEquals(calculator.add("//;\n1;2;3"), 6);
     }
 }

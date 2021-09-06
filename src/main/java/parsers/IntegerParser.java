@@ -1,7 +1,10 @@
 package parsers;
 
 import validators.Validator;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class IntegerParser implements Parser<Integer> {
     private final String DELIMITER_REGEX = "//.\n";
@@ -12,7 +15,7 @@ public class IntegerParser implements Parser<Integer> {
         validator = new Validator();
     }
 
-    public Integer[] parse(String stringToParse) {
+    public ArrayList<Integer> parse(String stringToParse) {
         // If there is a prefix for a custom delimiter, read it then remove it
         String delimiter = DEFAULT_DELIMITERS;
         if (hasCustomDelimiter(stringToParse)) {
@@ -20,7 +23,7 @@ public class IntegerParser implements Parser<Integer> {
             stringToParse = removeHead(stringToParse);
         }
 
-        String[] numberString = parseBody(stringToParse, delimiter);
+        ArrayList<String> numberString = parseBody(stringToParse, delimiter);
 
         return parseNumbers(numberString);
     }
@@ -46,17 +49,17 @@ public class IntegerParser implements Parser<Integer> {
         return stringToParse.matches(regexIfDelimiter);
     }
 
-    public String[] parseBody(String stringToParse, String delimiter) {
-        String[] items = Arrays.stream(stringToParse.split(delimiter))
-                .toArray(String[]::new);
+    public ArrayList<String> parseBody(String stringToParse, String delimiter) {
+        ArrayList<String> items = Arrays.stream(stringToParse.split(delimiter))
+                .collect(Collectors.toCollection(ArrayList<String>::new));
         validator.checkBody(items);
         return items;
     }
 
-    public Integer[] parseNumbers(String[] numberString) {
-        Integer[] numbers = Arrays.stream(numberString)
+    public ArrayList<Integer> parseNumbers(ArrayList<String> numberString) {
+        ArrayList<Integer> numbers = numberString.stream()
                 .map(Integer::parseInt)
-                .toArray(Integer[]::new);
+                .collect(Collectors.toCollection(ArrayList<Integer>::new));
         validator.checkNegatives(numbers);
         return numbers;
     }

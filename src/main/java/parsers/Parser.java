@@ -1,5 +1,7 @@
 package parsers;
 
+import java.util.ArrayList;
+
 public interface Parser<T> {
-    T[] parse(String stringToParse);
+    ArrayList<T> parse(String stringToParse);
 }
