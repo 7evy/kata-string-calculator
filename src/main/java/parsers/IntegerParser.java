@@ -2,8 +2,8 @@ package parsers;
 
 import validators.Validator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class IntegerParser implements Parser<Integer> {
@@ -15,7 +15,7 @@ public class IntegerParser implements Parser<Integer> {
         validator = new Validator();
     }
 
-    public ArrayList<Integer> parse(String stringToParse) {
+    public List<Integer> parse(String stringToParse) {
         // If there is a prefix for a custom delimiter, read it then remove it
         String delimiter = DEFAULT_DELIMITERS;
         if (hasCustomDelimiter(stringToParse)) {
@@ -23,7 +23,7 @@ public class IntegerParser implements Parser<Integer> {
             stringToParse = removeHead(stringToParse);
         }
 
-        ArrayList<String> numberString = parseBody(stringToParse, delimiter);
+        List<String> numberString = parseBody(stringToParse, delimiter);
 
         return parseNumbers(numberString);
     }
@@ -49,17 +49,17 @@ public class IntegerParser implements Parser<Integer> {
         return stringToParse.matches(regexIfDelimiter);
     }
 
-    public ArrayList<String> parseBody(String stringToParse, String delimiter) {
-        ArrayList<String> items = Arrays.stream(stringToParse.split(delimiter))
-                .collect(Collectors.toCollection(ArrayList<String>::new));
+    public List<String> parseBody(String stringToParse, String delimiter) {
+        List<String> items = Arrays.stream(stringToParse.split(delimiter))
+                .collect(Collectors.toList());
         validator.checkBody(items);
         return items;
     }
 
-    public ArrayList<Integer> parseNumbers(ArrayList<String> numberString) {
-        ArrayList<Integer> numbers = numberString.stream()
+    public List<Integer> parseNumbers(List<String> numberString) {
+        List<Integer> numbers = numberString.stream()
                 .map(Integer::parseInt)
-                .collect(Collectors.toCollection(ArrayList<Integer>::new));
+                .collect(Collectors.toList());
         validator.checkNegatives(numbers);
         return numbers;
     }

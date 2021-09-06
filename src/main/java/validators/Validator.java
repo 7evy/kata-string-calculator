@@ -4,7 +4,7 @@ import exceptions.BadDelimiterException;
 import exceptions.BadFormatException;
 import exceptions.NegativeNumberException;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Validator {
@@ -20,7 +20,7 @@ public class Validator {
     /**
      * Checks if all strings can be parsed to integers (negatives are handled elsewhere).
      */
-    public void checkBody(ArrayList<String> body) {
+    public void checkBody(List<String> body) {
         for (String s:body) {
             if (!s.matches(INTEGER_REGEX)) {
                 throw new BadFormatException("'" + s + "' cannot be parse as an integer");
@@ -28,10 +28,10 @@ public class Validator {
         }
     }
 
-    public void checkNegatives(ArrayList<Integer> numbers) {
-        ArrayList<Integer> negatives = numbers.stream()
+    public void checkNegatives(List<Integer> numbers) {
+        List<Integer> negatives = numbers.stream()
                 .filter(n -> n < 0)
-                .collect(Collectors.toCollection(ArrayList<Integer>::new));
+                .collect(Collectors.toList());
         if (!negatives.isEmpty()) {
             throw new NegativeNumberException(negatives);
         }

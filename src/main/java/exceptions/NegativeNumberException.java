@@ -1,9 +1,9 @@
 package exceptions;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class NegativeNumberException extends RuntimeException {
-    public NegativeNumberException(ArrayList<Integer> numbers) {
+    public NegativeNumberException(List<Integer> numbers) {
         super("Negative numbers are not allowed: " + numbers.toString());
     }
 }

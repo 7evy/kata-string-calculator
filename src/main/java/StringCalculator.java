@@ -1,7 +1,6 @@
 import parsers.IntegerParser;
 import parsers.Parser;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class StringCalculator {
         if (numberString.isEmpty()) {
             return 0;
         }
-        ArrayList<Integer> numbers = parser.parse(numberString);
+        List<Integer> numbers = parser.parse(numberString);
         return numbers.stream()
                 .reduce(0, Integer::sum);
     }

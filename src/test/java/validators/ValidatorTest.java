@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ValidatorTest {
 
@@ -22,7 +23,7 @@ public class ValidatorTest {
 
     @Test
     public void checkNegatives_NegativeNumbers_ThrowException() {
-        ArrayList<Integer> numbers = new ArrayList<>();
+        List<Integer> numbers = new ArrayList<>();
         numbers.add(1);
         numbers.add(-1);
         Assertions.assertThrows(NegativeNumberException.class, () -> validator.checkNegatives(numbers));
@@ -30,7 +31,7 @@ public class ValidatorTest {
 
     @Test
     public void checkNegatives_SomeNegativeNumbers_AllNegativesAppearInExceptionMessage() {
-        ArrayList<Integer> numbers = new ArrayList<>();
+        List<Integer> numbers = new ArrayList<>();
         numbers.add(-1);
         numbers.add(1);
         numbers.add(-2);
